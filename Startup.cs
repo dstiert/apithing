@@ -24,10 +24,7 @@ namespace apithing
             services.AddRouting(options => options.LowercaseUrls = true);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            var redisConfig = new RedisConfig();
-            Configuration.Bind(redisConfig);
-
-            services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(redisConfig.RedisUrl));
+            services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(Configuration["REDIS_URL"]));
             services.AddTransient(svc => svc.GetRequiredService<IConnectionMultiplexer>().GetDatabase());
 
             services.AddSwaggerGen(c =>
