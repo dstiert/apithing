@@ -1,3 +1,11 @@
 image: Ubuntu
 
-build_script: docker build .
+install: snap install --classic heroku
+
+build_script: docker build -t apithing .
+
+deploy_script: 
+  - docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
+  - docker tag apithing registry.heroku.com/apithing/web
+  - docker push registry.heroku.com/apithing/web
+  - heroku container:release web
