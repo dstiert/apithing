@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
 using Swashbuckle.AspNetCore.Swagger;
+using System;
 
 namespace apithing
 {
@@ -23,7 +24,16 @@ namespace apithing
             services.AddRouting(options => options.LowercaseUrls = true);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(Configuration["REDIS_URL"]));
+            var uri = new Uri(Configuration["REDIS_URL"]);
+            var redisConfig = new ConfigurationOptions
+            {
+                EndPoints =
+                {
+                    { uri.Host, uri.Port <= 0 ? 6379 : uri.Port }
+                },
+                Password = string.IsNullOrEmpty(uri.UserInfo) ? null : uri.UserInfo?.Split(":")[1]
+            };
+            services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(redisConfig));
             services.AddTransient(svc => svc.GetRequiredService<IConnectionMultiplexer>().GetDatabase());
 
             services.AddSwaggerGen(c =>
