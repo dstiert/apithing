@@ -1,6 +1,6 @@
 image: Ubuntu
 
-install: snap install --classic heroku
+install: sudo snap install --classic heroku
 
 build_script: docker build -t apithing .
 
