@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using apithing.v1.Model;
 using Microsoft.AspNetCore.Mvc;
+using StackExchange.Redis;
 
 namespace apithing.Controllers
 {
@@ -10,36 +9,62 @@ namespace apithing.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        // GET api/values
-        [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        private readonly IDatabase _redis;
+        private readonly Random _random = new Random();
+
+        public ValuesController(IDatabase redis)
         {
-            return new string[] { "value1", "value2" };
+            _redis = redis;
         }
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        [HttpGet("{id}", Name = "GetValue")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public ActionResult<StoredValue> Get(int id)
         {
-            return "value";
+            var result = _redis.StringGet(id.ToString());
+
+            if(result.IsNull)
+            {
+                return NotFound();
+            }
+
+            return new StoredValue { Value = result.ToString() };
         }
 
-        // POST api/values
         [HttpPost]
-        public void Post([FromBody] string value)
+        [ProducesResponseType(201)]
+        public ActionResult<StoredValue> Post([FromBody] StoredValue value)
         {
+            var id = _random.Next();
+            _redis.StringSet(id.ToString(), value.Value);
+            return CreatedAtRoute("GetValue", new { id }, value);
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [ProducesResponseType(204)]
+        public ActionResult Put(int id, [FromBody] StoredValue value)
         {
+            _redis.StringSet(id.ToString(), value.Value);
+            return NoContent();
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public ActionResult Delete(int id)
         {
+            if(_redis.KeyDelete(id.ToString()))
+            {
+                return NoContent();
+            }
+            else
+            {
+                return NotFound();
+            }
+            
         }
     }
 }
