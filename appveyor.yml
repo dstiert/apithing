@@ -8,4 +8,4 @@ deploy_script:
   - docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
   - docker tag apithing registry.heroku.com/apithing/web
   - docker push registry.heroku.com/apithing/web
-  - heroku container:release web
+  - heroku container:release web --app apithing
