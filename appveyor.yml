@@ -2,10 +2,10 @@ image: Ubuntu
 
 install: sudo snap install --classic heroku
 
-build_script: docker build -t apithing .
+build_script: docker build -t pos-playground .
 
 deploy_script: 
   - docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
-  - docker tag apithing registry.heroku.com/apithing/web
-  - docker push registry.heroku.com/apithing/web
-  - heroku container:release web --app apithing
+  - docker tag pos-playground registry.heroku.com/pos-playground/web
+  - docker push registry.heroku.com/pos-playground/web
+  - heroku container:release web --app pos-playground
