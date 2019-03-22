@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "apithing": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "api/values",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://localhost:5000"
+    },
+    "apithing container": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Program Files\\Docker\\Docker\\Resources\\bin\\docker.exe",
+      "commandLineArgs": "run --rm -it -p 8000:80 -v %cd%:/app/ -w /app/apithing mcr.microsoft.com/dotnet/core/sdk:2.2 dotnet watch run",
+      "environmentVariables": {
+        "REDIS_URL": "redis://host.docker.internal"
+      }
+    }
+  }
+}

@@ -4,6 +4,12 @@ install: sudo snap install --classic heroku
 
 build_script: docker build -t pos-playground .
 
+before_test:
+  - docker-compose up -d
+
+after_test:
+  - docker-compose down
+
 deploy_script: 
   - docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
   - docker tag pos-playground registry.heroku.com/pos-playground/web
