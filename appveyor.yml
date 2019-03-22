@@ -2,7 +2,7 @@ image: Ubuntu
 
 install: sudo snap install --classic heroku
 
-build_script: docker build -t pos-playground .
+build_script: docker build -t pos-playground apithing
 
 before_test:
   - docker-compose up -d

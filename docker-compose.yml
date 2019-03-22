@@ -1,8 +1,8 @@
 ﻿version: '3'
 services:
   web:
-    build: .\apithing\
-    image: "apithing"
+    build: ./apithing/
+    image: "pos-playground"
     environment:
      - PORT=5000
      - REDIS_URL=redis://redis
