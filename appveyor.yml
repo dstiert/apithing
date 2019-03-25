@@ -12,7 +12,7 @@ before_test:
   - docker-compose up -d
 
 test_script:
-  - dotnet test **/*.tests.csproj
+  - dotnet test **/*.integrationtests.csproj
 
 after_test:
   - docker-compose down

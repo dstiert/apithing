@@ -1,7 +1,7 @@
 ﻿version: '3'
 services:
   web:
-    build: ./apithing/
+    build: ./
     image: "pos-playground"
     environment:
      - PORT=5000

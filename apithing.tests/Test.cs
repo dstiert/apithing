@@ -1,5 +1,4 @@
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using System;
 using System.Net.Http;
@@ -10,7 +9,7 @@ namespace Tests
     public class Tests
     {
         [Test]
-        public void Test1()
+        public void ApiTest()
         {
             var client = new HttpClient
             {

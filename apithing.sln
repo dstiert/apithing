@@ -5,7 +5,9 @@ VisualStudioVersion = 15.0.28307.438
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "apithing", "apithing\apithing.csproj", "{337DFCE6-0E4A-487C-99C6-36FD6214D078}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "apithing.tests", "apithing.tests\apithing.tests.csproj", "{AC69F2D1-DB7D-4B27-B4C2-D28CC0D64BB0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "apithing.integrationtests", "apithing.tests\apithing.integrationtests.csproj", "{AC69F2D1-DB7D-4B27-B4C2-D28CC0D64BB0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "apithing.unittests", "apithing.unittests\apithing.unittests.csproj", "{7766EDD8-5B69-49BC-BC2C-7CBD47699A37}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{AC69F2D1-DB7D-4B27-B4C2-D28CC0D64BB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC69F2D1-DB7D-4B27-B4C2-D28CC0D64BB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC69F2D1-DB7D-4B27-B4C2-D28CC0D64BB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7766EDD8-5B69-49BC-BC2C-7CBD47699A37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7766EDD8-5B69-49BC-BC2C-7CBD47699A37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7766EDD8-5B69-49BC-BC2C-7CBD47699A37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7766EDD8-5B69-49BC-BC2C-7CBD47699A37}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
