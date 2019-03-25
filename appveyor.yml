@@ -6,7 +6,7 @@ install:
   - sudo chmod +x /usr/local/bin/docker-compose
 
 build_script: 
-  - docker build -t pos-playground apithing
+  - docker build -t pos-playground .
 
 before_test:
   - docker-compose up -d
