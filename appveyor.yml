@@ -30,3 +30,7 @@ deploy_script:
   - docker tag pos-playground registry.heroku.com/pos-playground/web
   - docker push registry.heroku.com/pos-playground/web
   - heroku container:release web --app pos-playground
+
+on_finish:
+  - sh: export APPVEYOR_SSH_BLOCK=true
+  - sh: curl -sflL 'https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-ssh.sh' | bash -e -
