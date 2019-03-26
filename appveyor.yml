@@ -11,6 +11,7 @@ build_script:
   - docker build -t pos-playground .
 
 after_build:
+  - echo $COVERALLS_REPO_TOKEN
   - export id=$(docker images --filter "label=test=true" -q | head -1)
   - docker create --name testcontainer $id
   - docker cp testcontainer:/app/coverage.xml ./
