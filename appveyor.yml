@@ -1,32 +1,14 @@
-image: Ubuntu
+image: Visual Studio 2017
 
-install: 
-  - export PATH=$PATH:/root/.dotnet/tools
-  - dotnet tool install -g coveralls.net
-  - sudo snap install --classic heroku
-  - sudo curl -L https://github.com/docker/compose/releases/download/1.23.2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
-  - sudo chmod +x /usr/local/bin/docker-compose
+build_script:
+  - cmd: PowerShell -Version 2.0 .\build.ps1 -Configuration Release
 
-build_script: 
-  - docker build -t pos-playground .
+test: off
 
-after_build:
-  - export id=$(docker images --filter "label=test=true" -q | head -1)
-  - docker create --name testcontainer $id
-  - docker cp testcontainer:/app/coverage.xml ./
-  - csmacnz.Coveralls --opencover -i ./coverage.xml --repoToken $COVERALLS_TOKEN --commitId $APPVEYOR_REPO_COMMIT --commitBranch $APPVEYOR_REPO_BRANCH --commitAuthor "$APPVEYOR_REPO_COMMIT_AUTHOR" --commitEmail "$APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL" --commitMessage "$APPVEYOR_REPO_COMMIT_MESSAGE" --jobId $APPVEYOR_JOB_ID
+artifacts:
+  - path: 'artifacts\*'
 
-before_test:
-  - docker-compose up -d
-
-test_script:
-  - dotnet test **/*.integrationtests.csproj
-
-after_test:
-  - docker-compose down
-
-deploy_script: 
-  - docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
-  - docker tag pos-playground registry.heroku.com/pos-playground/web
-  - docker push registry.heroku.com/pos-playground/web
-  - heroku container:release web --app pos-playground
+deploy:
+  provider: Environment
+  name: azure-app-service
+  website: apithing
